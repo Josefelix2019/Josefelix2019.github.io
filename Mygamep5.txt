@@ -1,0 +1,182 @@
+/*
+Variaveis gerais do jogo
+*/
+
+let x = 260;
+let y = 170;
+let opcao = 1;
+let tela = 0;
+let cont = 0;
+let rate = 1;
+let cobrax = 90;
+let cobray = 90;
+let food;
+let quax = 60;
+let quay = 50;
+let tamq = 440;
+
+
+/* Mensagens de Começo de jogo
+ */
+alert("Use as teclas para CIMA e para BAIXO")
+
+function setup() {
+  createCanvas(600, 500);
+  frameRate(rate);
+}
+
+function draw(){
+  background(20, 190, 90);
+  if (tela == 0){
+    menu();
+  }
+    if(tela == 1){
+      play1();
+    }
+    if(tela == 2){
+      tutorial();
+    }
+    if(tela == 3){
+      loja();
+  }
+  if (tela == 4) {
+    creditos();
+
+  }
+}
+
+function menu(){
+  circle(342, 68, 130);
+  rect(x, y, 140, 50, 60)
+  /*Fazendo o Menu do Game*/
+  
+  textSize(50)
+  text("Menu", 280, 80);
+  textSize(30)
+  text("Jogar", 280, 200);
+  text("Tutorial", 280, 250);
+  text("Loja", 280, 300);
+  text("Creditos", 280, 350);
+}
+
+function play1() {
+  cont = cont + 1;
+  textSize(25)
+  text("Fase1", 280, 20);
+  time();
+  parede();
+  localizaCom();
+  cobra();
+  fim();
+}
+
+/*Temporizador do jogo*/
+function time() {
+    textSize(20)
+    timeS = parseInt(cont / rate)
+    text("Tempo: " + timeS, 490, 20);
+}
+
+/* A função a baixo é usada para criar o espaço onde a cobrinha irá percorrer*/
+function parede(){
+    square(quax, quay, tamq, 100);
+}
+
+/*Usado para finalizar o Game*/
+function fim(){
+    if (timeS === 50) {
+      rect(220, 18, 210, 60, 80);
+      textSize(20)
+      text("O tempo Acabou", 240, 60)
+      tela = 0;
+      cont = 0;
+      cobrax = 90;
+      console.log(cont);
+  }
+}
+
+function cobra(){
+     circle(cobrax, cobray, 20);
+     circle(cobrax + 20, cobray, 20);
+     circle(cobrax + 40, cobray, 20);
+     circle(cobrax + 60, cobray, 20);
+     circle(cobrax + 80, cobray, 25);
+}
+
+function localizaCom(){
+    let comx = Math.random() * 20;
+    let comy = Math.random() * 20;
+    food = circle(comx, comy, 30);
+
+    if (comx > quax && comx < tamq) {
+      comx = Math.random() * 10;
+      comy = Math.random() * 10;
+    }else{
+      if (comy > quay && comy < tamq){
+        comx = Math.random() * 10;
+        comy = Math.random() * 10;
+      }
+    }
+  }
+function tutorial(){
+    rect(220, 18, 210, 60, 80);
+    textSize(50)
+    text("Tutorial", 240, 60);
+}
+
+function loja(){
+    rect(260, 38, 120, 60, 80);
+    textSize(50)
+    text("loja", 280, 80);
+}
+
+function creditos(){
+    rect(260, 38, 210, 60, 100);
+    textSize(50)
+    text("creditos", 280, 80);
+  
+}
+/*Evento do teclado para Menu*/
+function keyPressed(){
+
+  if(key == "ArrowUp" && y > 180){
+    y = y - 50
+    opcao = opcao - 1;
+    console.log(opcao)
+  }
+  if(key == "ArrowDown" && y < 300){
+    y = y + 50
+    opcao = opcao + 1
+    console.log(opcao)
+  }
+  if(key == "Enter"){
+    tela = opcao
+  }
+  if(key == "Escape"){
+    tela = 0
+  }else{
+  if(tela == 1){
+      if (key == "ArrowDown"){
+        cobrax = cobrax + 0;
+        cobray = cobray + 20;
+        console.log("BAIXO") 
+      }
+      if (key == "ArrowUp"){
+        cobrax = cobrax + 0;
+        cobray = cobray - 20;
+        console.log("CIMA")
+      }
+      if (key == "ArrowRight"){
+        cobrax = cobrax + 20;
+        cobray = cobray - 0;
+        console.log("DIREITA")
+      }
+      if (key == "ArrowLeft") {
+        cobrax = cobrax - 20;
+        cobray = cobray - 0;
+        console.log("ESQUERDA")
+      }
+    }
+  }
+}
+
